@@ -1,0 +1,38 @@
+[
+  {
+    "Reference": "PR01",
+    "Designation": "Écouteur Bluetooth Sport",
+    "Price": "16.99",
+    "Image": "https://images-na.ssl-images-amazon.com/images/I/81AbpWtJ1lL._SL1500_.jpg"
+  },
+  {
+    "Reference": "PR02",
+    "Designation": "Écouteur Bluetooth Sport",
+    "Price": "29.99",
+    "Image": "https://images-na.ssl-images-amazon.com/images/I/418VbOAnvDL._SL1000_.jpg"
+  },
+  {
+    "Reference": "PR03",
+    "Designation": "Amazon Echo (2ème génération), Enceinte connectée avec Alexa, Tissu anthracite",
+    "Price": "99.99",
+    "Image": "https://images-na.ssl-images-amazon.com/images/I/61qPJbu0POL._SX425_.jpg"
+  },
+  {
+    "Reference": "PR04",
+    "Designation": "TWS Ecouteur Oreillette Bluetooth V5.0 Casque sans fil Sport ",
+    "Price": "48.99",
+    "Image": "https://images-na.ssl-images-amazon.com/images/I/81AbpWtJ1lL._SL1500_.jpg"
+  },
+  {
+    "Reference": "PR05",
+    "Designation": "Yacikos Coque Batterie pour iPhone 6s/6/7/8, 6000",
+    "Price": "26.95",
+    "Image": "https://images-na.ssl-images-amazon.com/images/I/61fyXWQ73nL._SX522_.jpg"
+  },
+  {
+    "Reference": "PR06",
+    "Designation": "Cable Phone,Zeuste Chargeur Phone [Lot de 3, 1.5M]",
+    "Price": "9.99",
+    "Image": "https://images-na.ssl-images-amazon.com/images/I/61zOSt6eDtL._SY355_.jpg"
+  }
+]
