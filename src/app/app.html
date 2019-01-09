@@ -1,22 +1,115 @@
 <main>
   <h1 class="title">Hello from Angular !</h1>
 
-  <!-- Images (and assets) are parsed and loaded from within the public directory -->
-  <!-- <img src="/img/logo.png"> -->
-  <div class="container">
-    <div class="row">
-      <div class="col-sm">
-        One of three columns
-      </div>
-      <div class="col-sm">
-        One of three columns
-      </div>
-      <div class="col-sm">
-        One of three columns
-      </div>
+  <!-- CLIENT BLOCK -->
+  <div class="card">
+    <div class="card-header">
+      Client
+    </div>
+    <div class="card-body">
+      <form class="form-row">
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" placeholder="Nom">
+        </div>
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" placeholder="Email">
+        </div>
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" placeholder="Numéro de compte">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary mb-2">Rechercher un client</button>
+        </div>
+      </form>
+      <a href="#" class="btn btn-primary">Choisir un client</a>
     </div>
   </div>
+
+  <!-- PRODUITS BLOCK -->
+  <div class="card">
+    <div class="card-header">
+      Produit
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <caption>Liste des produits ajoutés</caption>
+        <thead>
+          <tr>
+            <th scope="col">Référence</th>
+            <th scope="col">Libellé</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Quantité</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">PR01</th>
+            <td>Ecouteurs</td>
+            <td>19.66</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <th scope="row">PR02</th>
+            <td>Ecouteurs</td>
+            <td>29.66</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="#" class="btn btn-primary">Ajouter un produit</a>
+    </div>
+  </div>
+
+  <!-- ADRESSE DE LIVRAISON BLOCK -->
+  <div class="card">
+    <div class="card-header">
+      Adresse de livraison
+    </div>
+    <div class="card-body">
+      <form class="form-row">
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" placeholder="Numéro et libellé de la voie">
+        </div>
+        <div class="form-group col-md-2">
+          <input type="text" class="form-control" placeholder="Mentions spéciales de distribution">
+        </div>
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" placeholder="Code postal">
+        </div>
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" placeholder="Pays">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODE DE PAIEMENT BLOCK -->
+  <div class="card">
+    <div class="card-header">
+      Mode de Paiement
+    </div>
+    <div class="card-body">
+      <form class="form-row">
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" placeholder="Numéro de la carte de paiement">
+        </div>
+
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" placeholder="Nom">
+        </div>
+
+        <div class="form-group col-md-2">
+          <input type="text" class="form-control" placeholder="Date d'expiration">
+        </div>
+
+        <div class="form-group col-md-1">
+          <input type="text" class="form-control" placeholder="Cryptogramme">
+        </div>
+      </form>
+    </div>
+  </div>
+
 </main>
 <footer>
-  <a ng-href="{{vm.url}}">Webpack Angular Starter</a>
+  <a ng-href="{{vm.url}}">Mohamed EL MABROUK</a>
 </footer>
