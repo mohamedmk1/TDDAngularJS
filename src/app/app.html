@@ -1,5 +1,5 @@
 <main>
-  <h1 class="title">Hello from Angular !</h1>
+  <h1 class="title">Bon de commande</h1>
 
   <!-- CLIENT BLOCK -->
   <div class="card">
@@ -32,7 +32,9 @@
     </div>
     <div class="card-body">
       <table class="table">
-        <caption>Liste des produits ajoutés</caption>
+        <caption>Liste des produits ajoutés
+          <span class="badge badge-success">2</span>
+        </caption>
         <thead>
           <tr>
             <th scope="col">Référence</th>
@@ -115,6 +117,15 @@
     </div>
   </div>
 
+  <!-- ACTIONS BLOCK -->
+  <div class="card">
+    <div class="card-body">
+      <div class="form-group row">
+          <button type="submit" class="btn btn-primary col-md-5 col-sm-12">Valider</button>
+          <button type="submit" class="btn btn-dark col-md-5 col-sm-12 offset-md-2 mt-sm-2">Réinitiliser</button>
+      </div>
+    </div>
+  </div>
 </main>
 <footer>
   <a ng-href="{{vm.url}}">Mohamed EL MABROUK</a>
