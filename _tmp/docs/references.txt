@@ -1,1 +1,7 @@
 core: https://github.com/preboot/angularjs-webpack
+
+https://github.com/toddmotto/angularjs-styleguide#component-module
+
+https://medium.com/@zamarrowski/angular-1-x-component-based-application-with-webpack-and-es6-dfab450f2df4
+
+http://hantsy.blogspot.com/2016/11/getting-started-with-angular-15-and-es6.html
