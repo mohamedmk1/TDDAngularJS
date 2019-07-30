@@ -32,6 +32,15 @@ class AppCtrl {
     this.setCustomersList(this.getCustomersList());
   }
 
+  onValidate(){
+    if(_.isEmpty(this.customerForm)){
+      return -1;
+    }
+    if(_.isEmpty(this.customerForm.name) || _.isEmpty(this.customerForm.email) || _.isEmpty(this.customerForm.accountNumber)){
+      return -2;
+    }
+  }
+
   getCustomersList(){
     return [
       {
@@ -94,33 +103,32 @@ class AppCtrl {
   searchCustomer(){
     this.setCustomersList(this.getCustomersList());
 
-    if(_.isEmpty(this.customerForm)){
+    if (_.isEmpty(this.customerForm)){
       toastr.error("Veuillez saisir un critére de recherche client");
-    }
-    else{
-      if(this.customerForm.name){
+    } else {
+
+      if (this.customerForm.name){
         var searchFullName = this.customerForm.name;
         this.customersList = _.filter(this.customersList, function(item){
           var fullName = item.Prenom + " "+ item.Nom;
           return _.includes(fullName, searchFullName)
         });
       }
-      if(this.customerForm.email){
+      if (this.customerForm.email){
         this.customersList = _.filter(this.customersList, o => o.Email.includes(this.customerForm.email));
       }
-      if(this.customerForm.accountNumber){
+      if (this.customerForm.accountNumber){
         this.customersList = _.filter(this.customersList, o => o.AccountNumber.includes(this.customerForm.accountNumber));
       }
 
-      if(this.customersList.length === 0){
+      if (this.customersList.length === 0){
         toastr.error("Aucun client ne correspond aux critéres recherchés");
-      }
-      else if(this.customersList.length === 1){
+      } else if(this.customersList.length === 1){
         this.setCustomer(this.customersList[0]);
-      }
-      else{
+      } else {
         $('#clientModal').modal('show');
       }
+
     }
   }
 
