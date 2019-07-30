@@ -24,6 +24,7 @@ class AppCtrl {
   constructor() {
     this.onSelectedCustomer = this.onSelectedCustomer.bind(this);
     this.customerForm = {};
+    this.addressForm = {};
     this.customersList= [];
     this.url = 'https://github.com/preboot/angular-webpack';
   }
@@ -38,6 +39,12 @@ class AppCtrl {
     }
     if(_.isEmpty(this.customerForm.name) || _.isEmpty(this.customerForm.email) || _.isEmpty(this.customerForm.accountNumber)){
       return -2;
+    }
+    if(_.isEmpty(this.addressForm)){
+      return -3;
+    }
+    if(_.isEmpty(this.addressForm.street) || _.isEmpty(this.addressForm.postalCode) || _.isEmpty(this.addressForm.country)){
+      return -4;
     }
   }
 
