@@ -35,9 +35,10 @@
       Produit
     </div>
     <div class="card-body">
-      <table class="table">
+      <product-list list="vm.productsList" on-selected-product="vm.onSelectedProduct"></product-list>
+      <table class="table" ng-if="vm.currentProducts.length > 0">
         <caption>Liste des produits ajoutés
-          <span class="badge badge-success">2</span>
+          <span class="badge badge-success">{{vm.currentProducts.length}}</span>
         </caption>
         <thead>
           <tr>
@@ -48,21 +49,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">PR01</th>
-            <td>Ecouteurs</td>
-            <td>19.66</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <th scope="row">PR02</th>
-            <td>Ecouteurs</td>
-            <td>29.66</td>
-            <td>4</td>
+          <tr ng-repeat="currentProuct in vm.currentProducts">
+            <th scope="row">{{currentProuct.reference}}</th>
+            <td>{{currentProuct.label}}</td>
+            <td>{{currentProuct.price}}</td>
+            <td>{{currentProuct.quantity}}</td>
           </tr>
         </tbody>
       </table>
-      <a href="#" class="btn btn-primary">Ajouter un produit</a>
+      <button type="button" class="btn btn-primary" ng-click="vm.chooseProduct();">
+          Ajouter un produit
+        </button>
     </div>
   </div>
 
@@ -100,19 +97,19 @@
     <div class="card-body">
       <form class="form-row">
         <div class="form-group col-md-4">
-          <input type="text" class="form-control" placeholder="Numéro de la carte de paiement">
+          <input type="text" class="form-control" placeholder="Numéro de la carte de paiement" ng-model="vm.paymentCredentials.cardNumber">
         </div>
 
         <div class="form-group col-md-4">
-          <input type="text" class="form-control" placeholder="Nom">
+          <input type="text" class="form-control" placeholder="Nom" ng-model="vm.paymentCredentials.name">
         </div>
 
         <div class="form-group col-md-2">
-          <input type="text" class="form-control" placeholder="Date d'expiration">
+          <input type="text" class="form-control" placeholder="Date d'expiration(dd/mm/yyyy)" ng-model="vm.paymentCredentials.expirationDate">
         </div>
 
         <div class="form-group col-md-1">
-          <input type="text" class="form-control" placeholder="Cryptogramme">
+          <input type="text" class="form-control" placeholder="Cryptogramme" ng-model="vm.paymentCredentials.cryptogramme">
         </div>
       </form>
     </div>
@@ -123,7 +120,7 @@
     <div class="card-body">
       <div class="form-group row">
           <button type="submit" ng-click="vm.onValidate()" class="btn btn-primary col-md-5 col-sm-12">Valider</button>
-          <button type="submit" class="btn btn-dark col-md-5 col-sm-12 offset-md-2 mt-sm-2">Réinitiliser</button>
+          <button type="submit" ng-click="vm.onReset()" class="btn btn-dark col-md-5 col-sm-12 offset-md-2 mt-sm-2">Réinitiliser</button>
       </div>
     </div>
   </div>

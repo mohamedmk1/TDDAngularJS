@@ -1,6 +1,7 @@
 import angular from 'angular';
 import 'bootstrap';
 import customerList from './components/custsomer-list.component'
+import productList from './components/product-list.component'
 import _ from "lodash";
 import $ from "jquery";
 import toastr from "toastr";
@@ -23,29 +24,36 @@ class AppCtrl {
 
   constructor() {
     this.onSelectedCustomer = this.onSelectedCustomer.bind(this);
+    this.onSelectedProduct = this.onSelectedProduct.bind(this);
     this.customerForm = {};
     this.addressForm = {};
+    this.paymentCredentials = {};
     this.customersList= [];
+    this.currentProducts = [];
     this.url = 'https://github.com/preboot/angular-webpack';
   }
 
   $onInit(){
     this.setCustomersList(this.getCustomersList());
+    this.setProductsList(this.getProductsList());
+    this.currentProducts = [];
   }
 
-  onValidate(){
-    if(_.isEmpty(this.customerForm)){
-      return -1;
-    }
-    if(_.isEmpty(this.customerForm.name) || _.isEmpty(this.customerForm.email) || _.isEmpty(this.customerForm.accountNumber)){
-      return -2;
-    }
-    if(_.isEmpty(this.addressForm)){
-      return -3;
-    }
-    if(_.isEmpty(this.addressForm.street) || _.isEmpty(this.addressForm.postalCode) || _.isEmpty(this.addressForm.country)){
-      return -4;
-    }
+  getProductsList(){
+    return[
+      {
+        "reference": "PR01",
+        "label": "Ecouteurs",
+        "price": "19.66",
+        "quantity": "1"
+      },
+      {
+        "reference": "PR02",
+        "label": "Enceinte",
+        "price": "99.87",
+        "quantity": "1"
+      }
+    ]
   }
 
   getCustomersList(){
@@ -97,6 +105,10 @@ class AppCtrl {
     this.customersList = customers;
   }
 
+  setProductsList(products){
+    this.productsList = products;
+  }
+
   getCustomer(){
     return this.customerForm;
   }
@@ -139,9 +151,20 @@ class AppCtrl {
     }
   }
 
+  onReset(){
+    this.customerForm = {};
+    this.currentProducts = [];
+    this.addressForm = {};
+    this.paymentCredentials = {};
+  }
+
   chooseCustomer(){
     this.setCustomersList(this.getCustomersList());
     $('#clientModal').modal('show');
+  }
+
+  chooseProduct(){
+    $('#productModal').modal('show');
   }
 
   resetSearchCustomer(){
@@ -151,6 +174,11 @@ class AppCtrl {
   onSelectedCustomer(customer){
     this.setCustomer(customer);
   }
+
+  onSelectedProduct(product){
+    this.currentProducts.push(product);
+    console.log(this.currentProducts);
+  }
 }
 
 const MODULE_NAME = 'app';
@@ -158,6 +186,7 @@ const MODULE_NAME = 'app';
 angular.module(MODULE_NAME, [])
   .directive('app', app)
   .component('customerList', customerList)
+  .component('productList', productList)
   .controller('AppCtrl', AppCtrl);
 
 export default MODULE_NAME;
