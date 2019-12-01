@@ -5,6 +5,7 @@ import productList from './components/product-list.component'
 import _ from "lodash";
 import $ from "jquery";
 import toastr from "toastr";
+import AppService from './app.service';
 
 import '../style/app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,7 +23,7 @@ let app = () => {
 
 class AppCtrl {
 
-  constructor() {
+  constructor(AppService) {
     this.onSelectedCustomer = this.onSelectedCustomer.bind(this);
     this.onSelectedProduct = this.onSelectedProduct.bind(this);
     this.customerForm = {};
@@ -31,6 +32,17 @@ class AppCtrl {
     this.customersList= [];
     this.currentProducts = [];
     this.url = 'https://github.com/preboot/angular-webpack';
+
+    this.VALIDATION_ERROR = {
+      CUSTOMER_INFORMATIONS_NOT_SET: '-1',
+      CUSTOMER_MISSED_INFORMATIONS: '-2',
+      ADDRESS_INFORMATIONS_NOT_SET: '-3',
+      ADDRESS_MISSED_INFORMATIONS: '-4',
+      ADDRESS_STREET_NOT_VALID: '-5',
+      ADDRESS_POSTAL_CODE_NOT_VALID: '-6',
+      MISSING_PRODUCTS: '-7'
+    };
+    this.service = AppService;
   }
 
   $onInit(){
@@ -151,6 +163,31 @@ class AppCtrl {
     }
   }
 
+  onValidate(){
+    if (_.isEmpty(this.customerForm)){
+      toastr.error('Aucun client choisi');
+      return this.VALIDATION_ERROR.CUSTOMER_INFORMATIONS_NOT_SET;
+    }
+    if(_.isEmpty(this.customerForm.name) || _.isEmpty(this.customerForm.email) || _.isEmpty(this.customerForm.accountNumber)){
+      return this.VALIDATION_ERROR.CUSTOMER_MISSED_INFORMATIONS;
+    }
+    if(_.isEmpty(this.addressForm)){
+      return this.VALIDATION_ERROR.ADDRESS_INFORMATIONS_NOT_SET;
+    }
+    if(_.isEmpty(this.addressForm.postalCode) || _.isEmpty(this.addressForm.street) || _.isEmpty(this.addressForm.country)){
+      return this.VALIDATION_ERROR.ADDRESS_MISSED_INFORMATIONS;
+    }
+    if(!this.service.isValidStreet(this.addressForm.street)){
+      return this.VALIDATION_ERROR.ADDRESS_STREET_NOT_VALID;
+    }
+    if(!this.service.isValidPostalCode(this.addressForm.postalCode)){
+      return this.VALIDATION_ERROR.ADDRESS_POSTAL_CODE_NOT_VALID;
+    }
+    if(this.currentProducts.length === 0){
+      return this.VALIDATION_ERROR.MISSING_PRODUCTS;
+    }
+  }
+
   onReset(){
     this.customerForm = {};
     this.currentProducts = [];
@@ -177,7 +214,6 @@ class AppCtrl {
 
   onSelectedProduct(product){
     this.currentProducts.push(product);
-    console.log(this.currentProducts);
   }
 }
 
@@ -187,6 +223,7 @@ angular.module(MODULE_NAME, [])
   .directive('app', app)
   .component('customerList', customerList)
   .component('productList', productList)
-  .controller('AppCtrl', AppCtrl);
+  .controller('AppCtrl', AppCtrl)
+  .service('AppService', AppService);
 
 export default MODULE_NAME;

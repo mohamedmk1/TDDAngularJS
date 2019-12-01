@@ -78,7 +78,7 @@
 //   }
 
 //   isValidStreet(street){
-//     return street.match(/^\d+\s[A-z]+\s[A-z]+/g);
+//     return street.match(/^\d+(\s[a-zA-Z]+)+/g);
 //   }
 
 //   isValidPostalCode(postalCode){
