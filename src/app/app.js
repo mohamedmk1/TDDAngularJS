@@ -1,15 +1,14 @@
 import angular from 'angular';
 import 'bootstrap';
 import customerList from './components/custsomer-list.component'
-import productList from './components/product-list.component'
-import _ from "lodash";
+import productList from './components/product-list.component';
 import $ from "jquery";
-import toastr from "toastr";
-import AppService from './app.service';
+import _ from "lodash";
 
 import '../style/app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './../../node_modules/toastr/build/toastr.css';
+import AppService from './app.service';
 
 
 let app = () => {
@@ -20,29 +19,33 @@ let app = () => {
   }
 };
 
+const ValidationErrorsEnum = Object.freeze({
+  CUSTOMER_MISSING_INFORMATIONS: -1,
+  EMPTY_PRODUCTS: -2,
+  ADDRESS_INFORMATIONS_MISSING: -3,
+  ADDRESS_STREET_NOT_VALID: -4,
+  ADDRESS_POSTAL_CODE_NOT_VALID: -5
+});
 
 class AppCtrl {
 
-  constructor(AppService) {
+  constructor() {
     this.onSelectedCustomer = this.onSelectedCustomer.bind(this);
     this.onSelectedProduct = this.onSelectedProduct.bind(this);
-    this.customerForm = {};
-    this.addressForm = {};
+    this.customerForm = {
+      name: '',
+      email: '',
+      accountNumber: ''
+    };
+    this.addressForm = {
+      street: '',
+      postalCode: '',
+      country: ''
+    };
     this.paymentCredentials = {};
     this.customersList= [];
     this.currentProducts = [];
     this.url = 'https://github.com/preboot/angular-webpack';
-
-    this.VALIDATION_ERROR = {
-      CUSTOMER_INFORMATIONS_NOT_SET: '-1',
-      CUSTOMER_MISSED_INFORMATIONS: '-2',
-      ADDRESS_INFORMATIONS_NOT_SET: '-3',
-      ADDRESS_MISSED_INFORMATIONS: '-4',
-      ADDRESS_STREET_NOT_VALID: '-5',
-      ADDRESS_POSTAL_CODE_NOT_VALID: '-6',
-      MISSING_PRODUCTS: '-7'
-    };
-    this.service = AppService;
   }
 
   $onInit(){
@@ -164,27 +167,20 @@ class AppCtrl {
   }
 
   onValidate(){
-    if (_.isEmpty(this.customerForm)){
-      toastr.error('Aucun client choisi');
-      return this.VALIDATION_ERROR.CUSTOMER_INFORMATIONS_NOT_SET;
-    }
-    if(_.isEmpty(this.customerForm.name) || _.isEmpty(this.customerForm.email) || _.isEmpty(this.customerForm.accountNumber)){
-      return this.VALIDATION_ERROR.CUSTOMER_MISSED_INFORMATIONS;
-    }
-    if(_.isEmpty(this.addressForm)){
-      return this.VALIDATION_ERROR.ADDRESS_INFORMATIONS_NOT_SET;
-    }
-    if(_.isEmpty(this.addressForm.postalCode) || _.isEmpty(this.addressForm.street) || _.isEmpty(this.addressForm.country)){
-      return this.VALIDATION_ERROR.ADDRESS_MISSED_INFORMATIONS;
-    }
-    if(!this.service.isValidStreet(this.addressForm.street)){
-      return this.VALIDATION_ERROR.ADDRESS_STREET_NOT_VALID;
-    }
-    if(!this.service.isValidPostalCode(this.addressForm.postalCode)){
-      return this.VALIDATION_ERROR.ADDRESS_POSTAL_CODE_NOT_VALID;
+    if (_.isEmpty(this.customerForm.name) || _.isEmpty(this.customerForm.email) || _.isEmpty(this.customerForm.accountNumber)){
+      return ValidationErrorsEnum.CUSTOMER_MISSING_INFORMATIONS;
     }
     if(this.currentProducts.length === 0){
-      return this.VALIDATION_ERROR.MISSING_PRODUCTS;
+      return ValidationErrorsEnum.EMPTY_PRODUCTS;
+    }
+    if(_.isEmpty(this.addressForm.street) || _.isEmpty(this.addressForm.postalCode) || _.isEmpty(this.addressForm.country)){
+      return ValidationErrorsEnum.ADDRESS_INFORMATIONS_MISSING;
+    }
+    if(!this.addressForm.street.match(/^\d+(\s[a-zA-Z]+)+/g)){
+      return ValidationErrorsEnum.ADDRESS_STREET_NOT_VALID;
+    }
+    if(!this.addressForm.postalCode.match(/^\d+(\s[a-zA-Z]+)+/g)){
+      return ValidationErrorsEnum.ADDRESS_POSTAL_CODE_NOT_VALID;
     }
   }
 

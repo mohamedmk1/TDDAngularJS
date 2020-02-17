@@ -1,4 +1,5 @@
 import app from './app';
+import AppService from './app.service';
 
 describe('app', () => {
 
@@ -13,129 +14,99 @@ describe('app', () => {
       });
     });
 
-    it('should return CUSTOMER_INFORMATIONS_NOT_SET value if customer informations are not set', () => {
-      // Arrange
-      ctrl.customerForm = {};
-
-      // Act
-      const result = ctrl.onValidate();
-
-      // Assert
-      expect(result).toEqual(ctrl.VALIDATION_ERROR.CUSTOMER_INFORMATIONS_NOT_SET);
-    });
-
-    it("should return CUSTOMER_MISSED_INFORMATIONS if one or more customer informations are not defined", () => {
-      // Arrange
-      ctrl.customerForm = {
-        name: "john",
-        email: "",
-        accountNumber: "3456"
-      };
-
-      // Act
-      const result = ctrl.onValidate();
-
-      // Assert
-      expect(result).toEqual(ctrl.VALIDATION_ERROR.CUSTOMER_MISSED_INFORMATIONS);
-    });
-
-    it("should return ADDRESS_INFORMATIONS_NOT_SET if address informations are not set", () => {
+    it('should return -1 if one or more customer informations are not set', () => {
       //Arrange
       ctrl.customerForm = {
-        name: "john",
-        email: "john.eliott@gmail.com",
-        accountNumber: "3456"
+        name: 'john',
+        email: '',
+        accountNumber: "3654"
       };
-      ctrl.addressForm = {};
 
-      //Act
+      //Act 
       const result = ctrl.onValidate();
 
       //Assert
-      expect(result).toEqual(ctrl.VALIDATION_ERROR.ADDRESS_INFORMATIONS_NOT_SET);
+      expect(result).toEqual(-1);
     });
 
-    it("should return ADDRESS_MISSED_INFORMATIONS if one or more address informations are not set", () => {
+    it('should return -2 if order don\'t have at least one product', () => {
       //Arrange
       ctrl.customerForm = {
-        name: "john",
-        email: "john.eliott@gmail.com",
-        accountNumber: "3456"
-      };
-      ctrl.addressForm = {
-        street: "2 rue de Paris",
-        postalCode: "",
-        country: "FR"
-      };
-
-      //Act
-      const result = ctrl.onValidate();
-
-      //Assert
-      expect(result).toEqual(ctrl.VALIDATION_ERROR.ADDRESS_MISSED_INFORMATIONS);
-    });
-
-    it("should return ADDRESS_STREET_NOT_VALID if street is not valid", () => {
-      //Arrange
-      ctrl.customerForm = {
-        name: "john",
-        email: "john.eliott@gmail.com",
-        accountNumber: "3456"
-      };
-      ctrl.addressForm = {
-        street: "rue du commerce",
-        postalCode: "36543",
-        country: "FR"
-      };
-
-      // Act
-      const result = ctrl.onValidate();
-
-      // Assert
-      expect(result).toEqual(ctrl.VALIDATION_ERROR.ADDRESS_STREET_NOT_VALID);
-    });
-
-    it("should return ADDRESS_POSTAL_CODE_NOT_VALID if postal code is not valid", () => {
-      //Arrange
-      ctrl.customerForm = {
-        name: "john",
-        email: "john.eliott@gmail.com",
-        accountNumber: "3456"
-      };
-      ctrl.addressForm = {
-        street: "2 rue du commerce",
-        postalCode: "RT456",
-        country: "FR"
-      };
-
-      // Act
-      const result = ctrl.onValidate();
-
-      // Assert
-      expect(result).toEqual(ctrl.VALIDATION_ERROR.ADDRESS_POSTAL_CODE_NOT_VALID);
-    });
-
-    it("should return MISSING_PRODUCTS if we don't have products", () => {
-      //Arrange
-      ctrl.customerForm = {
-        name: "john",
-        email: "john.eliott@gmail.com",
-        accountNumber: "3456"
-      };
-      ctrl.addressForm = {
-        street: "2 rue du commerce",
-        postalCode: "94250",
-        country: "FR"
+        name: 'john',
+        email: 'lmabrouk.mohamed@gmail.com',
+        accountNumber: "3654"
       };
       ctrl.currentProducts = [];
 
-      // Act
+      //Act 
       const result = ctrl.onValidate();
 
-      // Assert
-      expect(result).toEqual(ctrl.VALIDATION_ERROR.MISSING_PRODUCTS);
+      //Assert
+      expect(result).toEqual(-2);
     });
 
+    it('should return -3 if address informations are not set', () => {
+      //Arrange
+      ctrl.customerForm = {
+        name: 'john',
+        email: 'lmabrouk.mohamed@gmail.com',
+        accountNumber: "3654"
+      };
+      ctrl.currentProducts = [{reference: "PR01", label: "Ecouteurs", price: 14.65, quantity: 3}];
+      ctrl.addressForm = {
+        street: '',
+        postalCode: '',
+        country: ''
+      };
+
+      //Act 
+      const result = ctrl.onValidate();
+
+      //Assert
+      expect(result).toEqual(-3);
+    });
+
+    it('should return -4 if street is not valid', () => {
+      //Arrange
+      ctrl.customerForm = {
+        name: 'john',
+        email: 'lmabrouk.mohamed@gmail.com',
+        accountNumber: "3654"
+      };
+      ctrl.currentProducts = [{reference: "PR01", label: "Ecouteurs", price: 14.65, quantity: 3}];
+      ctrl.addressForm = {
+        street: 'rue de Paris',
+        postalCode: '75016',
+        country: 'France'
+      };
+
+      //Act 
+      const result = ctrl.onValidate();
+
+      //Assert
+      expect(result).toEqual(-4);
+    });
+
+    it('should return -5 if postal code is not valid', () => {
+      //Arrange
+      ctrl.customerForm = {
+        name: 'john',
+        email: 'lmabrouk.mohamed@gmail.com',
+        accountNumber: "3654"
+      };
+      ctrl.currentProducts = [{reference: "PR01", label: "Ecouteurs", price: 14.65, quantity: 3}];
+      ctrl.addressForm = {
+        street: '2 rue de Paris',
+        postalCode: '75016g',
+        country: 'France'
+      };
+
+      //Act 
+      const result = ctrl.onValidate();
+
+      //Assert
+      expect(result).toEqual(-5);
+    });
 
   });
 });

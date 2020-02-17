@@ -5,6 +5,7 @@
 // import _ from "lodash";
 // import $ from "jquery";
 // import toastr from "toastr";
+// import AppService from './app.service';
 
 // import '../style/app.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,7 +23,7 @@
 
 // class AppCtrl {
 
-//   constructor() {
+//   constructor(AppService) {
 //     this.onSelectedCustomer = this.onSelectedCustomer.bind(this);
 //     this.onSelectedProduct = this.onSelectedProduct.bind(this);
 //     this.customerForm = {};
@@ -31,74 +32,19 @@
 //     this.customersList= [];
 //     this.currentProducts = [];
 //     this.url = 'https://github.com/preboot/angular-webpack';
-//     this.isValidStreet = this.isValidStreet.bind(this);
-//     this.isValidPostalCode = this.isValidPostalCode.bind(this);
+//     this.VALIDATION_ERROR = {
+//       CUSTOMER_INFORMATIONS_NOT_SET: "-1",
+//       CUSTOMER_MISSED_INFORMATIONS: '-2',
+//       MISSING_PRODUCTS: '-3',
+//       ADDRESS_INFORMATIONS_NOT_SET: '-4',
+//       ADDRESS_STREET_NOT_VALID: '-5'
+//     };
 //   }
 
 //   $onInit(){
 //     this.setCustomersList(this.getCustomersList());
 //     this.setProductsList(this.getProductsList());
 //     this.currentProducts = [];
-//   }
-
-//   onValidate(){
-//     if(_.isEmpty(this.customerForm)){
-//       return -1;
-//     }
-//     if(_.isEmpty(this.customerForm.name) || _.isEmpty(this.customerForm.email) || _.isEmpty(this.customerForm.accountNumber)){
-//       return -2;
-//     }
-//     if(_.isEmpty(this.addressForm)){
-//       return -3;
-//     }
-//     if(_.isEmpty(this.addressForm.street) || _.isEmpty(this.addressForm.postalCode) || _.isEmpty(this.addressForm.country)){
-//       return -4;
-//     }
-//     if(!this.isValidStreet(this.addressForm.street)){
-//       return -5;
-//     }
-//     if(!this.isValidPostalCode(this.addressForm.postalCode)){
-//       return -6;
-//     }
-//     if(_.isEmpty(this.paymentCredentials)){
-//       return -7;
-//     }
-//     if(!this.isValidCardNumber(this.paymentCredentials.cardNumber)){
-//       return -8;
-//     }
-//     if(!this.isValidFullName(this.paymentCredentials.name)){
-//       return -9;
-//     }
-//     if(!this.isValidExpirationDate(this.paymentCredentials.expirationDate)){
-//       return -10;
-//     }
-//     if(!this.isValidCryptogramme(this.paymentCredentials.cryptogramme)){
-//       return -11;
-//     }
-//   }
-
-//   isValidStreet(street){
-//     return street.match(/^\d+(\s[a-zA-Z]+)+/g);
-//   }
-
-//   isValidPostalCode(postalCode){
-//     return postalCode.match(/\d{5}/g) && postalCode.length == 5;
-//   }
-
-//   isValidCardNumber(cardNumber){
-//     return cardNumber.length == 16 && cardNumber.match(/\d{16}/g)
-//   }
-
-//   isValidExpirationDate(expirationDate){
-//     return expirationDate.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/g);
-//   }
-
-//   isValidFullName(name){
-//     return name.match(/^([a-z']+(-| )?)+$/i);
-//   }
-
-//   isValidCryptogramme(cryptogramme){
-//     return this.paymentCredentials.cryptogramme.match(/\d{3}/g) && this.paymentCredentials.cryptogramme.length == 3;
 //   }
 
 //   getProductsList(){
@@ -213,6 +159,37 @@
 //     }
 //   }
 
+//   onValidate() {
+//     if(_.isEmpty(this.customerForm)){
+//       toastr.error('veuillez sélectionner un client');
+//       return this.VALIDATION_ERROR.CUSTOMER_INFORMATIONS_NOT_SET;
+//     }
+//     // if(_.isEmpty(this.customerForm.name) || _.isEmpty(this.customerForm.email) || _.isEmpty(this.customerForm.accountNumber)){
+//     //   toastr.error('veuillez saisir toutes les informations du client');
+//     //   return this.VALIDATION_ERROR.CUSTOMER_MISSED_INFORMATIONS;
+//     // }
+//     // if(this.currentProducts.length === 0) {
+//     //   toastr.error('veuillez saisir au moins un produit');
+//     //   return this.VALIDATION_ERROR.MISSING_PRODUCTS;
+//     // }
+//     // if(_.isEmpty(this.addressForm)){
+//     //   toastr.error('veuillez mentionner votre adresse');
+//     //   return this.VALIDATION_ERROR.ADDRESS_INFORMATIONS_NOT_SET;
+//     // }
+//     // if(!this.addressForm.street.match(/^\d+(\s[a-zA-Z]+)+/g)){
+//     //   toastr.error('veuillez saisir une adresse valide');
+//     //   return this.VALIDATION_ERROR.ADDRESS_STREET_NOT_VALID;
+//     // }
+//     return 0;
+//   }
+
+//   onReset(){
+//     this.customerForm = {};
+//     this.currentProducts = [];
+//     this.addressForm = {};
+//     this.paymentCredentials = {};
+//   }
+
 //   chooseCustomer(){
 //     this.setCustomersList(this.getCustomersList());
 //     $('#clientModal').modal('show');
@@ -232,7 +209,6 @@
 
 //   onSelectedProduct(product){
 //     this.currentProducts.push(product);
-//     console.log(this.currentProducts);
 //   }
 // }
 
@@ -242,6 +218,7 @@
 //   .directive('app', app)
 //   .component('customerList', customerList)
 //   .component('productList', productList)
-//   .controller('AppCtrl', AppCtrl);
+//   .controller('AppCtrl', AppCtrl)
+//   .service('AppService', AppService);
 
 // export default MODULE_NAME;
