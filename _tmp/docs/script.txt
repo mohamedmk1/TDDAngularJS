@@ -1,3 +1,0 @@
-Dans le cadre de notre présentation, nous allons travailler sur la validation d'un bon de service.
-Un bon de service contient les informations d'un client, 1 ou plusieurs produits, 1 adresse de livraison
-ainsi que les données du payement.
