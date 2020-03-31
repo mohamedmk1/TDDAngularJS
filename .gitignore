@@ -1,7 +1,8 @@
-node_modules
-_tmp
 .idea
+_tmp/
+before/.idea
 before/node_modules
 before/coverage
+after/.idea
 after/node_modules
 after/coverage
