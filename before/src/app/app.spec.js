@@ -1,5 +1,4 @@
 import app from './app';
-import AppService from './app.service';
 
 describe('app', () => {
 
@@ -12,6 +11,10 @@ describe('app', () => {
       angular.mock.inject(($controller) => {
         ctrl = $controller('AppCtrl', {});
       });
+    });
+
+    it('should be defined', () => {
+      expect(ctrl).toBeDefined();
     });
 
   });

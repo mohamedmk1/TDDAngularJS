@@ -8,7 +8,6 @@ import _ from "lodash";
 import '../style/app.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './../../node_modules/toastr/build/toastr.css';
-import AppService from './app.service';
 
 
 let app = () => {
@@ -41,14 +40,16 @@ class AppCtrl {
     this.url = 'https://github.com/preboot/angular-webpack';
   }
 
-  $onInit() {
+  $onInit()
+  {
     this.setCustomersList(this.getCustomersList());
     this.setProductsList(this.getProductsList());
     this.currentProducts = [];
 
   }
 
-  getProductsList() {
+  getProductsList()
+  {
     return [
       {
         "reference": "PR01",
@@ -65,7 +66,8 @@ class AppCtrl {
     ]
   }
 
-  getCustomersList() {
+  getCustomersList()
+  {
     return [
       {
         "Nom": "EL Mabrouk",
@@ -110,25 +112,30 @@ class AppCtrl {
     ];
   }
 
-  setCustomersList(customers) {
+  setCustomersList(customers)
+  {
     this.customersList = customers;
   }
 
-  setProductsList(products) {
+  setProductsList(products)
+  {
     this.productsList = products;
   }
 
-  getCustomer() {
+  getCustomer()
+  {
     return this.customerForm;
   }
 
-  setCustomer(customer) {
+  setCustomer(customer)
+  {
     this.customerForm.name = customer.Prenom + " " + customer.Nom;
     this.customerForm.email = customer.Email;
     this.customerForm.accountNumber = customer.AccountNumber;
   }
 
-  searchCustomer() {
+  searchCustomer()
+  {
     this.setCustomersList(this.getCustomersList());
 
     if (_.isEmpty(this.customerForm)) {
@@ -160,36 +167,69 @@ class AppCtrl {
     }
   }
 
-  onReset() {
+  onValidate()
+  {
+    const ValidationErrorsEnum = Object.freeze(
+      {
+        CUSTOMER_MISSING_INFORMATIONS: -1,
+        EMPTY_PRODUCTS: -2,
+        ADDRESS_MISSING_INFORMATIONS: -3,
+        STREET_NOT_VALID: -4,
+        POSTAL_CODE_NOT_VALID: -5
+      });
+    if (_.isEmpty(this.customerForm.name) || _.isEmpty(this.customerForm.accountNumber) || _.isEmpty(this.customerForm.email)) {
+      console.log('veuillez saisir toutes les informations client');
+      return ValidationErrorsEnum.CUSTOMER_MISSING_INFORMATIONS;
+    }
+    if (this.currentProducts.length == 0) {
+      console.log('veuillez choisir un produit');
+      return ValidationErrorsEnum.EMPTY_PRODUCTS;
+    }
+    if(_.isEmpty(this.addressForm.country) || _.isEmpty(this.addressForm.postalCode) || _.isEmpty(this.addressForm.street)){
+      return ValidationErrorsEnum.ADDRESS_MISSING_INFORMATIONS;
+    }
+    if(!this.addressForm.street.match(/^\d+(\s[a-zA-Z]+)+/g)){
+      return ValidationErrorsEnum.STREET_NOT_VALID;
+    }
+    if(!this.addressForm.postalCode.match(/\d{5}/g)){
+      return ValidationErrorsEnum.POSTAL_CODE_NOT_VALID;
+    }
+  }
+
+  onReset()
+  {
     this.customerForm = {};
     this.currentProducts = [];
     this.addressForm = {};
     this.paymentCredentials = {};
   }
 
-  chooseCustomer() {
+  chooseCustomer()
+  {
     this.setCustomersList(this.getCustomersList());
     $('#clientModal').modal('show');
   }
 
-  chooseProduct() {
+  chooseProduct()
+  {
     $('#productModal').modal('show');
   }
 
-  resetSearchCustomer() {
+  resetSearchCustomer()
+  {
     this.customerForm = {};
   }
 
-  onSelectedCustomer(customer) {
+  onSelectedCustomer(customer)
+  {
     this.setCustomer(customer);
   }
 
-  onSelectedProduct(product) {
+  onSelectedProduct(product)
+  {
     this.currentProducts.push(product);
   }
-
 }
-
 
 const MODULE_NAME = 'app';
 
@@ -197,7 +237,6 @@ angular.module(MODULE_NAME, [])
   .directive('app', app)
   .component('customerList', customerList)
   .component('productList', productList)
-  .controller('AppCtrl', AppCtrl)
-  .service('AppService', AppService);
+  .controller('AppCtrl', AppCtrl);
 
 export default MODULE_NAME;
