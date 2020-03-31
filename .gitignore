@@ -1,3 +1,7 @@
 node_modules
-dist
-coverage
+_tmp
+.idea
+before/node_modules
+before/coverage
+after/node_modules
+after/coverage

@@ -1,0 +1,130 @@
+<main>
+  <h1 class="title">Bon de commande</h1>
+
+  <!-- CLIENT BLOCK -->
+  <div class="card">
+    <div class="card-header">
+      Client
+    </div>
+    <div class="card-body">
+      <form class="form-row">
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" placeholder="Nom" ng-model="vm.customerForm.name">
+        </div>
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" placeholder="Email" ng-model="vm.customerForm.email">
+        </div>
+        <div class="form-group col-md-3">
+          <input type="text" class="form-control" placeholder="Numéro de compte" ng-model="vm.customerForm.accountNumber">
+        </div>
+        <div class="col-auto">
+          <button type="button" class="btn btn-primary mb-2" ng-click="vm.searchCustomer();">Rechercher un client</button>
+          <button type="button" class="btn btn-secondary mb-2" ng-click="vm.resetSearchCustomer();">Réinitialiser</button>
+        </div>
+      </form>
+      <button type="button" class="btn btn-primary" ng-click="vm.chooseCustomer();">
+        Choisir un client
+      </button>
+      <customer-list list="vm.customersList" on-selected-customer="vm.onSelectedCustomer"></customer-list>
+    </div>
+  </div>
+
+  <!-- PRODUITS BLOCK -->
+  <div class="card">
+    <div class="card-header">
+      Produit
+    </div>
+    <div class="card-body">
+      <product-list list="vm.productsList" on-selected-product="vm.onSelectedProduct"></product-list>
+      <table class="table" ng-if="vm.currentProducts.length > 0">
+        <caption>Liste des produits ajoutés
+          <span class="badge badge-success">{{vm.currentProducts.length}}</span>
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Référence</th>
+            <th scope="col">Libellé</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Quantité</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="currentProuct in vm.currentProducts">
+            <th scope="row">{{currentProuct.reference}}</th>
+            <td>{{currentProuct.label}}</td>
+            <td>{{currentProuct.price}}</td>
+            <td>{{currentProuct.quantity}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-primary" ng-click="vm.chooseProduct();">
+          Ajouter un produit
+        </button>
+    </div>
+  </div>
+
+  <!-- ADRESSE DE LIVRAISON BLOCK -->
+  <div class="card">
+    <div class="card-header">
+      Adresse de livraison
+    </div>
+    <div class="card-body">
+      <form class="form-row">
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" placeholder="Numéro et libellé de la voie" ng-model="vm.addressForm.street">
+        </div>
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" placeholder="Code postal" ng-model="vm.addressForm.postalCode">
+        </div>
+        <div class="form-group col-md-4">
+          <select class="form-control" id="pays" ng-model="vm.addressForm.country">
+            <option value="">Séléctionner un Pays</option>
+            <option value="FR">France</option>
+            <option value="AL">Allemagne</option>
+            <option value="AG">Angleterre</option>
+            <option value="IT">Italie</option>
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODE DE PAIEMENT BLOCK -->
+  <!-- <div class="card">
+    <div class="card-header">
+      Mode de Paiement
+    </div>
+    <div class="card-body">
+      <form class="form-row">
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" placeholder="Numéro de la carte de paiement" ng-model="vm.paymentCredentials.cardNumber">
+        </div>
+
+        <div class="form-group col-md-4">
+          <input type="text" class="form-control" placeholder="Nom" ng-model="vm.paymentCredentials.name">
+        </div>
+
+        <div class="form-group col-md-2">
+          <input type="text" class="form-control" placeholder="Date d'expiration(dd/mm/yyyy)" ng-model="vm.paymentCredentials.expirationDate">
+        </div>
+
+        <div class="form-group col-md-1">
+          <input type="text" class="form-control" placeholder="Cryptogramme" ng-model="vm.paymentCredentials.cryptogramme">
+        </div>
+      </form>
+    </div>
+  </div> -->
+
+  <!-- ACTIONS BLOCK -->
+  <div class="card">
+    <div class="card-body">
+      <div class="form-group row">
+          <button type="submit" ng-click="vm.onValidate()" class="btn btn-primary col-md-5 col-sm-12">Valider</button>
+          <button type="submit" ng-click="vm.onReset()" class="btn btn-dark col-md-5 col-sm-12 offset-md-2 mt-sm-2">Réinitiliser</button>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <a ng-href="{{vm.url}}">Mohamed EL MABROUK</a>
+</footer>
